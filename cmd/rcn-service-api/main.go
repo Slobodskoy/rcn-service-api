@@ -32,4 +32,6 @@ func main() {
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 
 	<-sigs
+
+	retranslator.Close()
 }
