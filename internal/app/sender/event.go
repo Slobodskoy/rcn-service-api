@@ -1,7 +1,7 @@
 package sender
 
 import (
-	"github.com/Slobodskoy/rcn-service-api/internal/model"
+	"github.com/ozonmp/rcn-service-api/internal/model"
 )
 
 type EventSender interface {

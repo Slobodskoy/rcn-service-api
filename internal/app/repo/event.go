@@ -4,7 +4,7 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/Slobodskoy/rcn-service-api/internal/model"
+	"github.com/ozonmp/rcn-service-api/internal/model"
 )
 
 type EventRepo interface {

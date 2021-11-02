@@ -4,9 +4,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Slobodskoy/rcn-service-api/internal/app/repo"
-	"github.com/Slobodskoy/rcn-service-api/internal/app/sender"
-	"github.com/Slobodskoy/rcn-service-api/internal/model"
+	"github.com/ozonmp/rcn-service-api/internal/app/repo"
+	"github.com/ozonmp/rcn-service-api/internal/app/sender"
+	"github.com/ozonmp/rcn-service-api/internal/model"
 
 	"github.com/gammazero/workerpool"
 )

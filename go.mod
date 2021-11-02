@@ -1,4 +1,4 @@
-module github.com/Slobodskoy/rcn-service-api
+module github.com/ozonmp/rcn-service-api
 
 go 1.17
 

@@ -7,7 +7,7 @@ package mocks
 import (
 	reflect "reflect"
 
-	model "github.com/Slobodskoy/rcn-service-api/internal/model"
+	model "github.com/ozonmp/rcn-service-api/internal/model"
 	gomock "github.com/golang/mock/gomock"
 )
 
