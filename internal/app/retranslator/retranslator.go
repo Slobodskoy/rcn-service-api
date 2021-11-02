@@ -3,11 +3,11 @@ package retranslator
 import (
 	"time"
 
-	"github.com/Slobodskoy/rcn-service-api/internal/app/consumer"
-	"github.com/Slobodskoy/rcn-service-api/internal/app/producer"
-	"github.com/Slobodskoy/rcn-service-api/internal/app/repo"
-	"github.com/Slobodskoy/rcn-service-api/internal/app/sender"
-	"github.com/Slobodskoy/rcn-service-api/internal/model"
+	"github.com/ozonmp/rcn-service-api/internal/app/consumer"
+	"github.com/ozonmp/rcn-service-api/internal/app/producer"
+	"github.com/ozonmp/rcn-service-api/internal/app/repo"
+	"github.com/ozonmp/rcn-service-api/internal/app/sender"
+	"github.com/ozonmp/rcn-service-api/internal/model"
 
 	"github.com/gammazero/workerpool"
 )

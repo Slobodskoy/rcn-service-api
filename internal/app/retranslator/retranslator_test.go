@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Slobodskoy/rcn-service-api/internal/mocks"
+	"github.com/ozonmp/rcn-service-api/internal/mocks"
 	"github.com/golang/mock/gomock"
 )
 
