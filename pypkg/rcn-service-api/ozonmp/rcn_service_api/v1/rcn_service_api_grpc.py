@@ -15,29 +15,77 @@ import google.protobuf.timestamp_pb2
 import ozonmp.rcn_service_api.v1.rcn_service_api_pb2
 
 
-class OmpTemplateApiServiceBase(abc.ABC):
+class RcnServiceApiServiceBase(abc.ABC):
 
     @abc.abstractmethod
-    async def DescribeTemplateV1(self, stream: 'grpclib.server.Stream[ozonmp.rcn_service_api.v1.rcn_service_api_pb2.DescribeTemplateV1Request, ozonmp.rcn_service_api.v1.rcn_service_api_pb2.DescribeTemplateV1Response]') -> None:
+    async def CreateServiceV1(self, stream: 'grpclib.server.Stream[ozonmp.rcn_service_api.v1.rcn_service_api_pb2.CreateServiceV1Request, ozonmp.rcn_service_api.v1.rcn_service_api_pb2.CreateServiceV1Response]') -> None:
+        pass
+
+    @abc.abstractmethod
+    async def DescribeServiceV1(self, stream: 'grpclib.server.Stream[ozonmp.rcn_service_api.v1.rcn_service_api_pb2.DescribeServiceV1Request, ozonmp.rcn_service_api.v1.rcn_service_api_pb2.DescribeServiceV1Response]') -> None:
+        pass
+
+    @abc.abstractmethod
+    async def RemoveServiceV1(self, stream: 'grpclib.server.Stream[ozonmp.rcn_service_api.v1.rcn_service_api_pb2.RemoveServiceV1Request, ozonmp.rcn_service_api.v1.rcn_service_api_pb2.RemoveServiceV1Response]') -> None:
+        pass
+
+    @abc.abstractmethod
+    async def ListServiceV1(self, stream: 'grpclib.server.Stream[ozonmp.rcn_service_api.v1.rcn_service_api_pb2.ListServiceV1Request, ozonmp.rcn_service_api.v1.rcn_service_api_pb2.ListServiceV1Response]') -> None:
         pass
 
     def __mapping__(self) -> typing.Dict[str, grpclib.const.Handler]:
         return {
-            '/ozonmp.rcn_service_api.v1.OmpTemplateApiService/DescribeTemplateV1': grpclib.const.Handler(
-                self.DescribeTemplateV1,
+            '/ozonmp.rcn_service_api.v1.RcnServiceApiService/CreateServiceV1': grpclib.const.Handler(
+                self.CreateServiceV1,
                 grpclib.const.Cardinality.UNARY_UNARY,
-                ozonmp.rcn_service_api.v1.rcn_service_api_pb2.DescribeTemplateV1Request,
-                ozonmp.rcn_service_api.v1.rcn_service_api_pb2.DescribeTemplateV1Response,
+                ozonmp.rcn_service_api.v1.rcn_service_api_pb2.CreateServiceV1Request,
+                ozonmp.rcn_service_api.v1.rcn_service_api_pb2.CreateServiceV1Response,
+            ),
+            '/ozonmp.rcn_service_api.v1.RcnServiceApiService/DescribeServiceV1': grpclib.const.Handler(
+                self.DescribeServiceV1,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                ozonmp.rcn_service_api.v1.rcn_service_api_pb2.DescribeServiceV1Request,
+                ozonmp.rcn_service_api.v1.rcn_service_api_pb2.DescribeServiceV1Response,
+            ),
+            '/ozonmp.rcn_service_api.v1.RcnServiceApiService/RemoveServiceV1': grpclib.const.Handler(
+                self.RemoveServiceV1,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                ozonmp.rcn_service_api.v1.rcn_service_api_pb2.RemoveServiceV1Request,
+                ozonmp.rcn_service_api.v1.rcn_service_api_pb2.RemoveServiceV1Response,
+            ),
+            '/ozonmp.rcn_service_api.v1.RcnServiceApiService/ListServiceV1': grpclib.const.Handler(
+                self.ListServiceV1,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                ozonmp.rcn_service_api.v1.rcn_service_api_pb2.ListServiceV1Request,
+                ozonmp.rcn_service_api.v1.rcn_service_api_pb2.ListServiceV1Response,
             ),
         }
 
 
-class OmpTemplateApiServiceStub:
+class RcnServiceApiServiceStub:
 
     def __init__(self, channel: grpclib.client.Channel) -> None:
-        self.DescribeTemplateV1 = grpclib.client.UnaryUnaryMethod(
+        self.CreateServiceV1 = grpclib.client.UnaryUnaryMethod(
             channel,
-            '/ozonmp.rcn_service_api.v1.OmpTemplateApiService/DescribeTemplateV1',
-            ozonmp.rcn_service_api.v1.rcn_service_api_pb2.DescribeTemplateV1Request,
-            ozonmp.rcn_service_api.v1.rcn_service_api_pb2.DescribeTemplateV1Response,
+            '/ozonmp.rcn_service_api.v1.RcnServiceApiService/CreateServiceV1',
+            ozonmp.rcn_service_api.v1.rcn_service_api_pb2.CreateServiceV1Request,
+            ozonmp.rcn_service_api.v1.rcn_service_api_pb2.CreateServiceV1Response,
+        )
+        self.DescribeServiceV1 = grpclib.client.UnaryUnaryMethod(
+            channel,
+            '/ozonmp.rcn_service_api.v1.RcnServiceApiService/DescribeServiceV1',
+            ozonmp.rcn_service_api.v1.rcn_service_api_pb2.DescribeServiceV1Request,
+            ozonmp.rcn_service_api.v1.rcn_service_api_pb2.DescribeServiceV1Response,
+        )
+        self.RemoveServiceV1 = grpclib.client.UnaryUnaryMethod(
+            channel,
+            '/ozonmp.rcn_service_api.v1.RcnServiceApiService/RemoveServiceV1',
+            ozonmp.rcn_service_api.v1.rcn_service_api_pb2.RemoveServiceV1Request,
+            ozonmp.rcn_service_api.v1.rcn_service_api_pb2.RemoveServiceV1Response,
+        )
+        self.ListServiceV1 = grpclib.client.UnaryUnaryMethod(
+            channel,
+            '/ozonmp.rcn_service_api.v1.RcnServiceApiService/ListServiceV1',
+            ozonmp.rcn_service_api.v1.rcn_service_api_pb2.ListServiceV1Request,
+            ozonmp.rcn_service_api.v1.rcn_service_api_pb2.ListServiceV1Response,
         )

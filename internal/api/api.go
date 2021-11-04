@@ -10,59 +10,120 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
+	"github.com/ozonmp/rcn-service-api/internal/model"
 	"github.com/ozonmp/rcn-service-api/internal/repo"
 
 	pb "github.com/ozonmp/rcn-service-api/pkg/rcn-service-api"
 )
 
 var (
-	totalTemplateNotFound = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "rcn_service_api_template_not_found_total",
-		Help: "Total number of templates that were not found",
+	serviceNotFound = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "rcn_service_api_service_not_found",
+		Help: "Service not found",
 	})
 )
 
-type templateAPI struct {
-	pb.UnimplementedOmpTemplateApiServiceServer
+type serviceAPI struct {
+	pb.UnimplementedRcnServiceApiServiceServer
 	repo repo.Repo
 }
 
-// NewTemplateAPI returns api of rcn-service-api service
-func NewTemplateAPI(r repo.Repo) pb.OmpTemplateApiServiceServer {
-	return &templateAPI{repo: r}
+// NewSeviceAPI returns api of rcn-service-api service
+func NewServiceAPI(r repo.Repo) pb.RcnServiceApiServiceServer {
+	return &serviceAPI{repo: r}
 }
 
-func (o *templateAPI) DescribeTemplateV1(
+func (o *serviceAPI) CreateServiceV1(
 	ctx context.Context,
-	req *pb.DescribeTemplateV1Request,
-) (*pb.DescribeTemplateV1Response, error) {
+	req *pb.CreateServiceV1Request,
+) (*pb.CreateServiceV1Response, error) {
 
 	if err := req.Validate(); err != nil {
-		log.Error().Err(err).Msg("DescribeTemplateV1 - invalid argument")
+		log.Error().Err(err).Msg("CreateServiceV1 - invalid argument")
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	template, err := o.repo.DescribeTemplate(ctx, req.TemplateId)
+	service := model.Service{
+		Id:          req.GetValue().Id,
+		Title:       req.GetValue().Title,
+		Description: req.GetValue().Description,
+		Rating:      int(req.GetValue().Rating),
+	}
+	serviceID, err := o.repo.CreateService(ctx, service)
 	if err != nil {
-		log.Error().Err(err).Msg("DescribeTemplateV1 -- failed")
+		log.Error().Err(err).Msg("CreateServiceV1 -- failed")
 
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	if template == nil {
-		log.Debug().Uint64("templateId", req.TemplateId).Msg("template not found")
-		totalTemplateNotFound.Inc()
+	log.Debug().Msg("CreateServiceV1 - success")
 
-		return nil, status.Error(codes.NotFound, "template not found")
+	return &pb.CreateServiceV1Response{ServiceId: serviceID}, nil
+}
+
+func (o *serviceAPI) DescribeServiceV1(
+	ctx context.Context,
+	req *pb.DescribeServiceV1Request,
+) (*pb.DescribeServiceV1Response, error) {
+	if err := req.Validate(); err != nil {
+		log.Error().Err(err).Msg("DescribeServiceV1 - invalid argument")
+
+		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	log.Debug().Msg("DescribeTemplateV1 - success")
+	service, err := o.repo.DescribeService(ctx, req.ServiceId)
+	if err != nil {
+		log.Error().Err(err).Msg("DescribeServiceV1 -- failed")
 
-	return &pb.DescribeTemplateV1Response{
-		Value: &pb.Template{
-			Id:  template.ID,
-			Foo: template.Foo,
-		},
-	}, nil
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	log.Debug().Msg("DescribeServiceV1 - success")
+
+	return &pb.DescribeServiceV1Response{Value: service.ToPb()}, nil
+}
+
+func (o *serviceAPI) RemoveServiceV1(
+	ctx context.Context,
+	req *pb.RemoveServiceV1Request,
+) (*pb.RemoveServiceV1Response, error) {
+	if err := req.Validate(); err != nil {
+		log.Error().Err(err).Msg("RemoveServiceV1 - invalid argument")
+
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	ok, err := o.repo.RemoveService(ctx, req.ServiceId)
+	if err != nil {
+		log.Error().Err(err).Msg("RemoveServiceV1 -- failed")
+
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	log.Debug().Msg("RemoveServiceV1 - success")
+
+	return &pb.RemoveServiceV1Response{Found: ok}, nil
+}
+
+func (o *serviceAPI) ListServiceV1(
+	ctx context.Context,
+	req *pb.ListServiceV1Request,
+) (*pb.ListServiceV1Response, error) {
+	if err := req.Validate(); err != nil {
+		log.Error().Err(err).Msg("ListServiceV1 - invalid argument")
+
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	list, err := o.repo.ListService(ctx)
+	if err != nil {
+		log.Error().Err(err).Msg("ListServiceV1 -- failed")
+
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	log.Debug().Msg("ListServiceV1 - success")
+
+	return &pb.ListServiceV1Response{Items: (model.ServiceList)(list).ToPb()}, nil
 }

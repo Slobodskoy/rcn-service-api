@@ -17,49 +17,117 @@ from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n/ozonmp/rcn_service_api/v1/rcn_service_api.proto\x12\x19ozonmp.rcn_service_api.v1\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"b\n\x08Template\x12\x0e\n\x02id\x18\x01 \x01(\x04R\x02id\x12\x10\n\x03\x66oo\x18\x02 \x01(\x04R\x03\x66oo\x12\x34\n\x07\x63reated\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.TimestampR\x07\x63reated\"E\n\x19\x44\x65scribeTemplateV1Request\x12(\n\x0btemplate_id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\ntemplateId\"W\n\x1a\x44\x65scribeTemplateV1Response\x12\x39\n\x05value\x18\x01 \x01(\x0b\x32#.ozonmp.rcn_service_api.v1.TemplateR\x05value2\xc0\x01\n\x15OmpTemplateApiService\x12\xa6\x01\n\x12\x44\x65scribeTemplateV1\x12\x34.ozonmp.rcn_service_api.v1.DescribeTemplateV1Request\x1a\x35.ozonmp.rcn_service_api.v1.DescribeTemplateV1Response\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/templates/{template_id}BGZEgithub.com/ozonmp/rcn-service-api/pkg/rcn-service-api;rcn_service_apib\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n/ozonmp/rcn_service_api/v1/rcn_service_api.proto\x12\x19ozonmp.rcn_service_api.v1\x1a\x17validate/validate.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"{\n\x07Service\x12\x17\n\x02id\x18\x01 \x01(\x04\x42\x07\xfa\x42\x04\x32\x02 \x00R\x02id\x12\x1d\n\x05title\x18\x02 \x01(\tB\x07\xfa\x42\x04r\x02\x10\x05R\x05title\x12 \n\x0b\x64\x65scription\x18\x03 \x01(\tR\x0b\x64\x65scription\x12\x16\n\x06rating\x18\x04 \x01(\x05R\x06rating\"R\n\x16\x43reateServiceV1Request\x12\x38\n\x05value\x18\x01 \x01(\x0b\x32\".ozonmp.rcn_service_api.v1.ServiceR\x05value\"8\n\x17\x43reateServiceV1Response\x12\x1d\n\nservice_id\x18\x01 \x01(\x04R\tserviceId\"9\n\x18\x44\x65scribeServiceV1Request\x12\x1d\n\nservice_id\x18\x01 \x01(\x04R\tserviceId\"U\n\x19\x44\x65scribeServiceV1Response\x12\x38\n\x05value\x18\x01 \x01(\x0b\x32\".ozonmp.rcn_service_api.v1.ServiceR\x05value\"\x16\n\x14ListServiceV1Request\"Q\n\x15ListServiceV1Response\x12\x38\n\x05items\x18\x01 \x03(\x0b\x32\".ozonmp.rcn_service_api.v1.ServiceR\x05items\"7\n\x16RemoveServiceV1Request\x12\x1d\n\nservice_id\x18\x01 \x01(\x04R\tserviceId\"/\n\x17RemoveServiceV1Response\x12\x14\n\x05\x66ound\x18\x01 \x01(\x08R\x05\x66ound2\xfb\x04\n\x14RcnServiceApiService\x12\x91\x01\n\x0f\x43reateServiceV1\x12\x31.ozonmp.rcn_service_api.v1.CreateServiceV1Request\x1a\x32.ozonmp.rcn_service_api.v1.CreateServiceV1Response\"\x17\x82\xd3\xe4\x93\x02\x11\"\x0c/v1/services:\x01*\x12\xa1\x01\n\x11\x44\x65scribeServiceV1\x12\x33.ozonmp.rcn_service_api.v1.DescribeServiceV1Request\x1a\x34.ozonmp.rcn_service_api.v1.DescribeServiceV1Response\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/v1/services/{service_id}\x12\x9b\x01\n\x0fRemoveServiceV1\x12\x31.ozonmp.rcn_service_api.v1.RemoveServiceV1Request\x1a\x32.ozonmp.rcn_service_api.v1.RemoveServiceV1Response\"!\x82\xd3\xe4\x93\x02\x1b*\x19/v1/services/{service_id}\x12\x8c\x01\n\rListServiceV1\x12/.ozonmp.rcn_service_api.v1.ListServiceV1Request\x1a\x30.ozonmp.rcn_service_api.v1.ListServiceV1Response\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/services/allBGZEgithub.com/ozonmp/rcn-service-api/pkg/rcn-service-api;rcn_service_apib\x06proto3')
 
 
 
-_TEMPLATE = DESCRIPTOR.message_types_by_name['Template']
-_DESCRIBETEMPLATEV1REQUEST = DESCRIPTOR.message_types_by_name['DescribeTemplateV1Request']
-_DESCRIBETEMPLATEV1RESPONSE = DESCRIPTOR.message_types_by_name['DescribeTemplateV1Response']
-Template = _reflection.GeneratedProtocolMessageType('Template', (_message.Message,), {
-  'DESCRIPTOR' : _TEMPLATE,
+_SERVICE = DESCRIPTOR.message_types_by_name['Service']
+_CREATESERVICEV1REQUEST = DESCRIPTOR.message_types_by_name['CreateServiceV1Request']
+_CREATESERVICEV1RESPONSE = DESCRIPTOR.message_types_by_name['CreateServiceV1Response']
+_DESCRIBESERVICEV1REQUEST = DESCRIPTOR.message_types_by_name['DescribeServiceV1Request']
+_DESCRIBESERVICEV1RESPONSE = DESCRIPTOR.message_types_by_name['DescribeServiceV1Response']
+_LISTSERVICEV1REQUEST = DESCRIPTOR.message_types_by_name['ListServiceV1Request']
+_LISTSERVICEV1RESPONSE = DESCRIPTOR.message_types_by_name['ListServiceV1Response']
+_REMOVESERVICEV1REQUEST = DESCRIPTOR.message_types_by_name['RemoveServiceV1Request']
+_REMOVESERVICEV1RESPONSE = DESCRIPTOR.message_types_by_name['RemoveServiceV1Response']
+Service = _reflection.GeneratedProtocolMessageType('Service', (_message.Message,), {
+  'DESCRIPTOR' : _SERVICE,
   '__module__' : 'ozonmp.rcn_service_api.v1.rcn_service_api_pb2'
-  # @@protoc_insertion_point(class_scope:ozonmp.rcn_service_api.v1.Template)
+  # @@protoc_insertion_point(class_scope:ozonmp.rcn_service_api.v1.Service)
   })
-_sym_db.RegisterMessage(Template)
+_sym_db.RegisterMessage(Service)
 
-DescribeTemplateV1Request = _reflection.GeneratedProtocolMessageType('DescribeTemplateV1Request', (_message.Message,), {
-  'DESCRIPTOR' : _DESCRIBETEMPLATEV1REQUEST,
+CreateServiceV1Request = _reflection.GeneratedProtocolMessageType('CreateServiceV1Request', (_message.Message,), {
+  'DESCRIPTOR' : _CREATESERVICEV1REQUEST,
   '__module__' : 'ozonmp.rcn_service_api.v1.rcn_service_api_pb2'
-  # @@protoc_insertion_point(class_scope:ozonmp.rcn_service_api.v1.DescribeTemplateV1Request)
+  # @@protoc_insertion_point(class_scope:ozonmp.rcn_service_api.v1.CreateServiceV1Request)
   })
-_sym_db.RegisterMessage(DescribeTemplateV1Request)
+_sym_db.RegisterMessage(CreateServiceV1Request)
 
-DescribeTemplateV1Response = _reflection.GeneratedProtocolMessageType('DescribeTemplateV1Response', (_message.Message,), {
-  'DESCRIPTOR' : _DESCRIBETEMPLATEV1RESPONSE,
+CreateServiceV1Response = _reflection.GeneratedProtocolMessageType('CreateServiceV1Response', (_message.Message,), {
+  'DESCRIPTOR' : _CREATESERVICEV1RESPONSE,
   '__module__' : 'ozonmp.rcn_service_api.v1.rcn_service_api_pb2'
-  # @@protoc_insertion_point(class_scope:ozonmp.rcn_service_api.v1.DescribeTemplateV1Response)
+  # @@protoc_insertion_point(class_scope:ozonmp.rcn_service_api.v1.CreateServiceV1Response)
   })
-_sym_db.RegisterMessage(DescribeTemplateV1Response)
+_sym_db.RegisterMessage(CreateServiceV1Response)
 
-_OMPTEMPLATEAPISERVICE = DESCRIPTOR.services_by_name['OmpTemplateApiService']
+DescribeServiceV1Request = _reflection.GeneratedProtocolMessageType('DescribeServiceV1Request', (_message.Message,), {
+  'DESCRIPTOR' : _DESCRIBESERVICEV1REQUEST,
+  '__module__' : 'ozonmp.rcn_service_api.v1.rcn_service_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.rcn_service_api.v1.DescribeServiceV1Request)
+  })
+_sym_db.RegisterMessage(DescribeServiceV1Request)
+
+DescribeServiceV1Response = _reflection.GeneratedProtocolMessageType('DescribeServiceV1Response', (_message.Message,), {
+  'DESCRIPTOR' : _DESCRIBESERVICEV1RESPONSE,
+  '__module__' : 'ozonmp.rcn_service_api.v1.rcn_service_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.rcn_service_api.v1.DescribeServiceV1Response)
+  })
+_sym_db.RegisterMessage(DescribeServiceV1Response)
+
+ListServiceV1Request = _reflection.GeneratedProtocolMessageType('ListServiceV1Request', (_message.Message,), {
+  'DESCRIPTOR' : _LISTSERVICEV1REQUEST,
+  '__module__' : 'ozonmp.rcn_service_api.v1.rcn_service_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.rcn_service_api.v1.ListServiceV1Request)
+  })
+_sym_db.RegisterMessage(ListServiceV1Request)
+
+ListServiceV1Response = _reflection.GeneratedProtocolMessageType('ListServiceV1Response', (_message.Message,), {
+  'DESCRIPTOR' : _LISTSERVICEV1RESPONSE,
+  '__module__' : 'ozonmp.rcn_service_api.v1.rcn_service_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.rcn_service_api.v1.ListServiceV1Response)
+  })
+_sym_db.RegisterMessage(ListServiceV1Response)
+
+RemoveServiceV1Request = _reflection.GeneratedProtocolMessageType('RemoveServiceV1Request', (_message.Message,), {
+  'DESCRIPTOR' : _REMOVESERVICEV1REQUEST,
+  '__module__' : 'ozonmp.rcn_service_api.v1.rcn_service_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.rcn_service_api.v1.RemoveServiceV1Request)
+  })
+_sym_db.RegisterMessage(RemoveServiceV1Request)
+
+RemoveServiceV1Response = _reflection.GeneratedProtocolMessageType('RemoveServiceV1Response', (_message.Message,), {
+  'DESCRIPTOR' : _REMOVESERVICEV1RESPONSE,
+  '__module__' : 'ozonmp.rcn_service_api.v1.rcn_service_api_pb2'
+  # @@protoc_insertion_point(class_scope:ozonmp.rcn_service_api.v1.RemoveServiceV1Response)
+  })
+_sym_db.RegisterMessage(RemoveServiceV1Response)
+
+_RCNSERVICEAPISERVICE = DESCRIPTOR.services_by_name['RcnServiceApiService']
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
   DESCRIPTOR._serialized_options = b'ZEgithub.com/ozonmp/rcn-service-api/pkg/rcn-service-api;rcn_service_api'
-  _DESCRIBETEMPLATEV1REQUEST.fields_by_name['template_id']._options = None
-  _DESCRIBETEMPLATEV1REQUEST.fields_by_name['template_id']._serialized_options = b'\372B\0042\002 \000'
-  _OMPTEMPLATEAPISERVICE.methods_by_name['DescribeTemplateV1']._options = None
-  _OMPTEMPLATEAPISERVICE.methods_by_name['DescribeTemplateV1']._serialized_options = b'\202\323\344\223\002\035\022\033/v1/templates/{template_id}'
-  _TEMPLATE._serialized_start=166
-  _TEMPLATE._serialized_end=264
-  _DESCRIBETEMPLATEV1REQUEST._serialized_start=266
-  _DESCRIBETEMPLATEV1REQUEST._serialized_end=335
-  _DESCRIBETEMPLATEV1RESPONSE._serialized_start=337
-  _DESCRIBETEMPLATEV1RESPONSE._serialized_end=424
-  _OMPTEMPLATEAPISERVICE._serialized_start=427
-  _OMPTEMPLATEAPISERVICE._serialized_end=619
+  _SERVICE.fields_by_name['id']._options = None
+  _SERVICE.fields_by_name['id']._serialized_options = b'\372B\0042\002 \000'
+  _SERVICE.fields_by_name['title']._options = None
+  _SERVICE.fields_by_name['title']._serialized_options = b'\372B\004r\002\020\005'
+  _RCNSERVICEAPISERVICE.methods_by_name['CreateServiceV1']._options = None
+  _RCNSERVICEAPISERVICE.methods_by_name['CreateServiceV1']._serialized_options = b'\202\323\344\223\002\021\"\014/v1/services:\001*'
+  _RCNSERVICEAPISERVICE.methods_by_name['DescribeServiceV1']._options = None
+  _RCNSERVICEAPISERVICE.methods_by_name['DescribeServiceV1']._serialized_options = b'\202\323\344\223\002\033\022\031/v1/services/{service_id}'
+  _RCNSERVICEAPISERVICE.methods_by_name['RemoveServiceV1']._options = None
+  _RCNSERVICEAPISERVICE.methods_by_name['RemoveServiceV1']._serialized_options = b'\202\323\344\223\002\033*\031/v1/services/{service_id}'
+  _RCNSERVICEAPISERVICE.methods_by_name['ListServiceV1']._options = None
+  _RCNSERVICEAPISERVICE.methods_by_name['ListServiceV1']._serialized_options = b'\202\323\344\223\002\022\022\020/v1/services/all'
+  _SERVICE._serialized_start=166
+  _SERVICE._serialized_end=289
+  _CREATESERVICEV1REQUEST._serialized_start=291
+  _CREATESERVICEV1REQUEST._serialized_end=373
+  _CREATESERVICEV1RESPONSE._serialized_start=375
+  _CREATESERVICEV1RESPONSE._serialized_end=431
+  _DESCRIBESERVICEV1REQUEST._serialized_start=433
+  _DESCRIBESERVICEV1REQUEST._serialized_end=490
+  _DESCRIBESERVICEV1RESPONSE._serialized_start=492
+  _DESCRIBESERVICEV1RESPONSE._serialized_end=577
+  _LISTSERVICEV1REQUEST._serialized_start=579
+  _LISTSERVICEV1REQUEST._serialized_end=601
+  _LISTSERVICEV1RESPONSE._serialized_start=603
+  _LISTSERVICEV1RESPONSE._serialized_end=684
+  _REMOVESERVICEV1REQUEST._serialized_start=686
+  _REMOVESERVICEV1REQUEST._serialized_end=741
+  _REMOVESERVICEV1RESPONSE._serialized_start=743
+  _REMOVESERVICEV1RESPONSE._serialized_end=790
+  _RCNSERVICEAPISERVICE._serialized_start=793
+  _RCNSERVICEAPISERVICE._serialized_end=1428
 # @@protoc_insertion_point(module_scope)

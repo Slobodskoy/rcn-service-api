@@ -8,26 +8,71 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/ozonmp/rcn-service-api/pkg/rcn-service-api;rcn_service_api";
 
-// OmpTemplateApiService - Service for working with templates
-service OmpTemplateApiService {
-  // DescribeTemplateV1 - Describe a template
-  rpc DescribeTemplateV1(DescribeTemplateV1Request) returns (DescribeTemplateV1Response) {
+// RcnServiceApiService - Service for working with templates
+service RcnServiceApiService {
+  // CreateServiceV1 - Create a service
+  rpc CreateServiceV1(CreateServiceV1Request) returns (CreateServiceV1Response) {
     option (google.api.http) = {
-      get: "/v1/templates/{template_id}"
+      post: "/v1/services"
+      body: "*"
     };
   }
+
+  // DescribeServiceV1 - Describe a service
+  rpc DescribeServiceV1(DescribeServiceV1Request) returns (DescribeServiceV1Response) {
+    option (google.api.http) = {
+      get: "/v1/services/{service_id}"
+    };
+  }
+
+  // RemoveServiceV1 - Remove a service
+  rpc RemoveServiceV1(RemoveServiceV1Request) returns (RemoveServiceV1Response) {
+    option (google.api.http) = {
+      delete: "/v1/services/{service_id}"
+    };
+  }
+
+  // ListServiceV1 - List a service
+  rpc ListServiceV1(ListServiceV1Request) returns (ListServiceV1Response) {
+    option (google.api.http) = {
+      get: "/v1/services/all"
+    };
+  }  
 }
 
-message Template {
-  uint64 id  = 1;
-  uint64 foo = 2;
-  google.protobuf.Timestamp created = 3;
+message Service {
+	uint64 id = 1  [(validate.rules).uint64.gt = 0];
+	string title = 2 [(validate.rules).string = {min_len: 5}];
+	string description = 3;
+	int32 rating = 4;
 }
 
-message DescribeTemplateV1Request {
-  uint64 template_id = 1 [(validate.rules).uint64.gt = 0];
+message CreateServiceV1Request {
+  Service value = 1;
 }
 
-message DescribeTemplateV1Response {
-  Template value = 1;
+message CreateServiceV1Response {
+  uint64 service_id = 1;
+}
+
+message DescribeServiceV1Request {
+  uint64 service_id = 1;
+}
+
+message DescribeServiceV1Response {
+  Service value = 1;
+}
+
+message ListServiceV1Request {}
+
+message ListServiceV1Response {
+  repeated Service items = 1;
+}
+
+message RemoveServiceV1Request {
+  uint64 service_id = 1;
+}
+
+message RemoveServiceV1Response {
+  bool found = 1;
 }

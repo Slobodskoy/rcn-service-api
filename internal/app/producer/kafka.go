@@ -1,6 +1,7 @@
 package producer
 
 import (
+	"log"
 	"sync"
 	"time"
 
@@ -61,11 +62,17 @@ func (p *producer) Start() {
 				case event := <-p.events:
 					if err := p.sender.Send(&event); err != nil {
 						p.workerPool.Submit(func() {
-							p.repo.Unlock([]uint64{event.ID})
+							err := p.repo.Unlock([]uint64{event.ID})
+							if err != nil {
+								log.Printf("Unlock error:  %s", err)
+							}
 						})
 					} else {
 						p.workerPool.Submit(func() {
 							p.repo.Remove([]uint64{event.ID})
+							if err != nil {
+								log.Printf("Remove error:  %s", err)
+							}
 						})
 					}
 				case <-p.done:

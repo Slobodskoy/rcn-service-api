@@ -33,105 +33,37 @@ var (
 	_ = anypb.Any{}
 )
 
-// Validate checks the field values on Template with the rules defined in the
+// Validate checks the field values on Service with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
-func (m *Template) Validate() error {
+func (m *Service) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	// no validation rules for Id
-
-	// no validation rules for Foo
-
-	if v, ok := interface{}(m.GetCreated()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return TemplateValidationError{
-				field:  "Created",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	return nil
-}
-
-// TemplateValidationError is the validation error returned by
-// Template.Validate if the designated constraints aren't met.
-type TemplateValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e TemplateValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e TemplateValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e TemplateValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e TemplateValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e TemplateValidationError) ErrorName() string { return "TemplateValidationError" }
-
-// Error satisfies the builtin error interface
-func (e TemplateValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sTemplate.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = TemplateValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = TemplateValidationError{}
-
-// Validate checks the field values on DescribeTemplateV1Request with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, an error is returned.
-func (m *DescribeTemplateV1Request) Validate() error {
-	if m == nil {
-		return nil
-	}
-
-	if m.GetTemplateId() <= 0 {
-		return DescribeTemplateV1RequestValidationError{
-			field:  "TemplateId",
+	if m.GetId() <= 0 {
+		return ServiceValidationError{
+			field:  "Id",
 			reason: "value must be greater than 0",
 		}
 	}
 
+	if utf8.RuneCountInString(m.GetTitle()) < 5 {
+		return ServiceValidationError{
+			field:  "Title",
+			reason: "value length must be at least 5 runes",
+		}
+	}
+
+	// no validation rules for Description
+
+	// no validation rules for Rating
+
 	return nil
 }
 
-// DescribeTemplateV1RequestValidationError is the validation error returned by
-// DescribeTemplateV1Request.Validate if the designated constraints aren't met.
-type DescribeTemplateV1RequestValidationError struct {
+// ServiceValidationError is the validation error returned by Service.Validate
+// if the designated constraints aren't met.
+type ServiceValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -139,24 +71,22 @@ type DescribeTemplateV1RequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e DescribeTemplateV1RequestValidationError) Field() string { return e.field }
+func (e ServiceValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DescribeTemplateV1RequestValidationError) Reason() string { return e.reason }
+func (e ServiceValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DescribeTemplateV1RequestValidationError) Cause() error { return e.cause }
+func (e ServiceValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DescribeTemplateV1RequestValidationError) Key() bool { return e.key }
+func (e ServiceValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DescribeTemplateV1RequestValidationError) ErrorName() string {
-	return "DescribeTemplateV1RequestValidationError"
-}
+func (e ServiceValidationError) ErrorName() string { return "ServiceValidationError" }
 
 // Error satisfies the builtin error interface
-func (e DescribeTemplateV1RequestValidationError) Error() string {
+func (e ServiceValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -168,14 +98,14 @@ func (e DescribeTemplateV1RequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDescribeTemplateV1Request.%s: %s%s",
+		"invalid %sService.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DescribeTemplateV1RequestValidationError{}
+var _ error = ServiceValidationError{}
 
 var _ interface {
 	Field() string
@@ -183,19 +113,19 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DescribeTemplateV1RequestValidationError{}
+} = ServiceValidationError{}
 
-// Validate checks the field values on DescribeTemplateV1Response with the
-// rules defined in the proto definition for this message. If any rules are
+// Validate checks the field values on CreateServiceV1Request with the rules
+// defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *DescribeTemplateV1Response) Validate() error {
+func (m *CreateServiceV1Request) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	if v, ok := interface{}(m.GetValue()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return DescribeTemplateV1ResponseValidationError{
+			return CreateServiceV1RequestValidationError{
 				field:  "Value",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -206,9 +136,9 @@ func (m *DescribeTemplateV1Response) Validate() error {
 	return nil
 }
 
-// DescribeTemplateV1ResponseValidationError is the validation error returned
-// by DescribeTemplateV1Response.Validate if the designated constraints aren't met.
-type DescribeTemplateV1ResponseValidationError struct {
+// CreateServiceV1RequestValidationError is the validation error returned by
+// CreateServiceV1Request.Validate if the designated constraints aren't met.
+type CreateServiceV1RequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -216,24 +146,24 @@ type DescribeTemplateV1ResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e DescribeTemplateV1ResponseValidationError) Field() string { return e.field }
+func (e CreateServiceV1RequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DescribeTemplateV1ResponseValidationError) Reason() string { return e.reason }
+func (e CreateServiceV1RequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DescribeTemplateV1ResponseValidationError) Cause() error { return e.cause }
+func (e CreateServiceV1RequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DescribeTemplateV1ResponseValidationError) Key() bool { return e.key }
+func (e CreateServiceV1RequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DescribeTemplateV1ResponseValidationError) ErrorName() string {
-	return "DescribeTemplateV1ResponseValidationError"
+func (e CreateServiceV1RequestValidationError) ErrorName() string {
+	return "CreateServiceV1RequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e DescribeTemplateV1ResponseValidationError) Error() string {
+func (e CreateServiceV1RequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -245,14 +175,14 @@ func (e DescribeTemplateV1ResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDescribeTemplateV1Response.%s: %s%s",
+		"invalid %sCreateServiceV1Request.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DescribeTemplateV1ResponseValidationError{}
+var _ error = CreateServiceV1RequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -260,4 +190,506 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DescribeTemplateV1ResponseValidationError{}
+} = CreateServiceV1RequestValidationError{}
+
+// Validate checks the field values on CreateServiceV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateServiceV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for ServiceId
+
+	return nil
+}
+
+// CreateServiceV1ResponseValidationError is the validation error returned by
+// CreateServiceV1Response.Validate if the designated constraints aren't met.
+type CreateServiceV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateServiceV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateServiceV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateServiceV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateServiceV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateServiceV1ResponseValidationError) ErrorName() string {
+	return "CreateServiceV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateServiceV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateServiceV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateServiceV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateServiceV1ResponseValidationError{}
+
+// Validate checks the field values on DescribeServiceV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *DescribeServiceV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for ServiceId
+
+	return nil
+}
+
+// DescribeServiceV1RequestValidationError is the validation error returned by
+// DescribeServiceV1Request.Validate if the designated constraints aren't met.
+type DescribeServiceV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DescribeServiceV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DescribeServiceV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DescribeServiceV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DescribeServiceV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DescribeServiceV1RequestValidationError) ErrorName() string {
+	return "DescribeServiceV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DescribeServiceV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDescribeServiceV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DescribeServiceV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DescribeServiceV1RequestValidationError{}
+
+// Validate checks the field values on DescribeServiceV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *DescribeServiceV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetValue()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DescribeServiceV1ResponseValidationError{
+				field:  "Value",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// DescribeServiceV1ResponseValidationError is the validation error returned by
+// DescribeServiceV1Response.Validate if the designated constraints aren't met.
+type DescribeServiceV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DescribeServiceV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DescribeServiceV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DescribeServiceV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DescribeServiceV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DescribeServiceV1ResponseValidationError) ErrorName() string {
+	return "DescribeServiceV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DescribeServiceV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDescribeServiceV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DescribeServiceV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DescribeServiceV1ResponseValidationError{}
+
+// Validate checks the field values on ListServiceV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ListServiceV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// ListServiceV1RequestValidationError is the validation error returned by
+// ListServiceV1Request.Validate if the designated constraints aren't met.
+type ListServiceV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListServiceV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListServiceV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListServiceV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListServiceV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListServiceV1RequestValidationError) ErrorName() string {
+	return "ListServiceV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListServiceV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListServiceV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListServiceV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListServiceV1RequestValidationError{}
+
+// Validate checks the field values on ListServiceV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ListServiceV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetItems() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListServiceV1ResponseValidationError{
+					field:  fmt.Sprintf("Items[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ListServiceV1ResponseValidationError is the validation error returned by
+// ListServiceV1Response.Validate if the designated constraints aren't met.
+type ListServiceV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListServiceV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListServiceV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListServiceV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListServiceV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListServiceV1ResponseValidationError) ErrorName() string {
+	return "ListServiceV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListServiceV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListServiceV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListServiceV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListServiceV1ResponseValidationError{}
+
+// Validate checks the field values on RemoveServiceV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RemoveServiceV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for ServiceId
+
+	return nil
+}
+
+// RemoveServiceV1RequestValidationError is the validation error returned by
+// RemoveServiceV1Request.Validate if the designated constraints aren't met.
+type RemoveServiceV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveServiceV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveServiceV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveServiceV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveServiceV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveServiceV1RequestValidationError) ErrorName() string {
+	return "RemoveServiceV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemoveServiceV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveServiceV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveServiceV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveServiceV1RequestValidationError{}
+
+// Validate checks the field values on RemoveServiceV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RemoveServiceV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Found
+
+	return nil
+}
+
+// RemoveServiceV1ResponseValidationError is the validation error returned by
+// RemoveServiceV1Response.Validate if the designated constraints aren't met.
+type RemoveServiceV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveServiceV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveServiceV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveServiceV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveServiceV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveServiceV1ResponseValidationError) ErrorName() string {
+	return "RemoveServiceV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemoveServiceV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveServiceV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveServiceV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveServiceV1ResponseValidationError{}

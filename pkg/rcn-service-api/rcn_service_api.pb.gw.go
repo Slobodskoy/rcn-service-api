@@ -31,8 +31,42 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_OmpTemplateApiService_DescribeTemplateV1_0(ctx context.Context, marshaler runtime.Marshaler, client OmpTemplateApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DescribeTemplateV1Request
+func request_RcnServiceApiService_CreateServiceV1_0(ctx context.Context, marshaler runtime.Marshaler, client RcnServiceApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateServiceV1Request
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.CreateServiceV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_RcnServiceApiService_CreateServiceV1_0(ctx context.Context, marshaler runtime.Marshaler, server RcnServiceApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateServiceV1Request
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.CreateServiceV1(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_RcnServiceApiService_DescribeServiceV1_0(ctx context.Context, marshaler runtime.Marshaler, client RcnServiceApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DescribeServiceV1Request
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -42,23 +76,23 @@ func request_OmpTemplateApiService_DescribeTemplateV1_0(ctx context.Context, mar
 		_   = err
 	)
 
-	val, ok = pathParams["template_id"]
+	val, ok = pathParams["service_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "template_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "service_id")
 	}
 
-	protoReq.TemplateId, err = runtime.Uint64(val)
+	protoReq.ServiceId, err = runtime.Uint64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "template_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "service_id", err)
 	}
 
-	msg, err := client.DescribeTemplateV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.DescribeServiceV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_OmpTemplateApiService_DescribeTemplateV1_0(ctx context.Context, marshaler runtime.Marshaler, server OmpTemplateApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DescribeTemplateV1Request
+func local_request_RcnServiceApiService_DescribeServiceV1_0(ctx context.Context, marshaler runtime.Marshaler, server RcnServiceApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DescribeServiceV1Request
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -68,39 +102,109 @@ func local_request_OmpTemplateApiService_DescribeTemplateV1_0(ctx context.Contex
 		_   = err
 	)
 
-	val, ok = pathParams["template_id"]
+	val, ok = pathParams["service_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "template_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "service_id")
 	}
 
-	protoReq.TemplateId, err = runtime.Uint64(val)
+	protoReq.ServiceId, err = runtime.Uint64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "template_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "service_id", err)
 	}
 
-	msg, err := server.DescribeTemplateV1(ctx, &protoReq)
+	msg, err := server.DescribeServiceV1(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-// RegisterOmpTemplateApiServiceHandlerServer registers the http handlers for service OmpTemplateApiService to "mux".
-// UnaryRPC     :call OmpTemplateApiServiceServer directly.
+func request_RcnServiceApiService_RemoveServiceV1_0(ctx context.Context, marshaler runtime.Marshaler, client RcnServiceApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RemoveServiceV1Request
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["service_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "service_id")
+	}
+
+	protoReq.ServiceId, err = runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "service_id", err)
+	}
+
+	msg, err := client.RemoveServiceV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_RcnServiceApiService_RemoveServiceV1_0(ctx context.Context, marshaler runtime.Marshaler, server RcnServiceApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RemoveServiceV1Request
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["service_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "service_id")
+	}
+
+	protoReq.ServiceId, err = runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "service_id", err)
+	}
+
+	msg, err := server.RemoveServiceV1(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_RcnServiceApiService_ListServiceV1_0(ctx context.Context, marshaler runtime.Marshaler, client RcnServiceApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListServiceV1Request
+	var metadata runtime.ServerMetadata
+
+	msg, err := client.ListServiceV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_RcnServiceApiService_ListServiceV1_0(ctx context.Context, marshaler runtime.Marshaler, server RcnServiceApiServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListServiceV1Request
+	var metadata runtime.ServerMetadata
+
+	msg, err := server.ListServiceV1(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+// RegisterRcnServiceApiServiceHandlerServer registers the http handlers for service RcnServiceApiService to "mux".
+// UnaryRPC     :call RcnServiceApiServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterOmpTemplateApiServiceHandlerFromEndpoint instead.
-func RegisterOmpTemplateApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server OmpTemplateApiServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterRcnServiceApiServiceHandlerFromEndpoint instead.
+func RegisterRcnServiceApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server RcnServiceApiServiceServer) error {
 
-	mux.Handle("GET", pattern_OmpTemplateApiService_DescribeTemplateV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RcnServiceApiService_CreateServiceV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.rcn_service_api.v1.OmpTemplateApiService/DescribeTemplateV1", runtime.WithHTTPPathPattern("/v1/templates/{template_id}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.rcn_service_api.v1.RcnServiceApiService/CreateServiceV1", runtime.WithHTTPPathPattern("/v1/services"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OmpTemplateApiService_DescribeTemplateV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RcnServiceApiService_CreateServiceV1_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -108,16 +212,85 @@ func RegisterOmpTemplateApiServiceHandlerServer(ctx context.Context, mux *runtim
 			return
 		}
 
-		forward_OmpTemplateApiService_DescribeTemplateV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RcnServiceApiService_CreateServiceV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_RcnServiceApiService_DescribeServiceV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.rcn_service_api.v1.RcnServiceApiService/DescribeServiceV1", runtime.WithHTTPPathPattern("/v1/services/{service_id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_RcnServiceApiService_DescribeServiceV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RcnServiceApiService_DescribeServiceV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_RcnServiceApiService_RemoveServiceV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.rcn_service_api.v1.RcnServiceApiService/RemoveServiceV1", runtime.WithHTTPPathPattern("/v1/services/{service_id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_RcnServiceApiService_RemoveServiceV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RcnServiceApiService_RemoveServiceV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_RcnServiceApiService_ListServiceV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ozonmp.rcn_service_api.v1.RcnServiceApiService/ListServiceV1", runtime.WithHTTPPathPattern("/v1/services/all"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_RcnServiceApiService_ListServiceV1_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RcnServiceApiService_ListServiceV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterOmpTemplateApiServiceHandlerFromEndpoint is same as RegisterOmpTemplateApiServiceHandler but
+// RegisterRcnServiceApiServiceHandlerFromEndpoint is same as RegisterRcnServiceApiServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterOmpTemplateApiServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterRcnServiceApiServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -137,39 +310,99 @@ func RegisterOmpTemplateApiServiceHandlerFromEndpoint(ctx context.Context, mux *
 		}()
 	}()
 
-	return RegisterOmpTemplateApiServiceHandler(ctx, mux, conn)
+	return RegisterRcnServiceApiServiceHandler(ctx, mux, conn)
 }
 
-// RegisterOmpTemplateApiServiceHandler registers the http handlers for service OmpTemplateApiService to "mux".
+// RegisterRcnServiceApiServiceHandler registers the http handlers for service RcnServiceApiService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterOmpTemplateApiServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterOmpTemplateApiServiceHandlerClient(ctx, mux, NewOmpTemplateApiServiceClient(conn))
+func RegisterRcnServiceApiServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterRcnServiceApiServiceHandlerClient(ctx, mux, NewRcnServiceApiServiceClient(conn))
 }
 
-// RegisterOmpTemplateApiServiceHandlerClient registers the http handlers for service OmpTemplateApiService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "OmpTemplateApiServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "OmpTemplateApiServiceClient"
+// RegisterRcnServiceApiServiceHandlerClient registers the http handlers for service RcnServiceApiService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "RcnServiceApiServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "RcnServiceApiServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "OmpTemplateApiServiceClient" to call the correct interceptors.
-func RegisterOmpTemplateApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client OmpTemplateApiServiceClient) error {
+// "RcnServiceApiServiceClient" to call the correct interceptors.
+func RegisterRcnServiceApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client RcnServiceApiServiceClient) error {
 
-	mux.Handle("GET", pattern_OmpTemplateApiService_DescribeTemplateV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RcnServiceApiService_CreateServiceV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.rcn_service_api.v1.OmpTemplateApiService/DescribeTemplateV1", runtime.WithHTTPPathPattern("/v1/templates/{template_id}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.rcn_service_api.v1.RcnServiceApiService/CreateServiceV1", runtime.WithHTTPPathPattern("/v1/services"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OmpTemplateApiService_DescribeTemplateV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RcnServiceApiService_CreateServiceV1_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OmpTemplateApiService_DescribeTemplateV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RcnServiceApiService_CreateServiceV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_RcnServiceApiService_DescribeServiceV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.rcn_service_api.v1.RcnServiceApiService/DescribeServiceV1", runtime.WithHTTPPathPattern("/v1/services/{service_id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_RcnServiceApiService_DescribeServiceV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RcnServiceApiService_DescribeServiceV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("DELETE", pattern_RcnServiceApiService_RemoveServiceV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.rcn_service_api.v1.RcnServiceApiService/RemoveServiceV1", runtime.WithHTTPPathPattern("/v1/services/{service_id}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_RcnServiceApiService_RemoveServiceV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RcnServiceApiService_RemoveServiceV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_RcnServiceApiService_ListServiceV1_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ozonmp.rcn_service_api.v1.RcnServiceApiService/ListServiceV1", runtime.WithHTTPPathPattern("/v1/services/all"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_RcnServiceApiService_ListServiceV1_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RcnServiceApiService_ListServiceV1_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -177,9 +410,21 @@ func RegisterOmpTemplateApiServiceHandlerClient(ctx context.Context, mux *runtim
 }
 
 var (
-	pattern_OmpTemplateApiService_DescribeTemplateV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "templates", "template_id"}, ""))
+	pattern_RcnServiceApiService_CreateServiceV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "services"}, ""))
+
+	pattern_RcnServiceApiService_DescribeServiceV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "services", "service_id"}, ""))
+
+	pattern_RcnServiceApiService_RemoveServiceV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "services", "service_id"}, ""))
+
+	pattern_RcnServiceApiService_ListServiceV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "services", "all"}, ""))
 )
 
 var (
-	forward_OmpTemplateApiService_DescribeTemplateV1_0 = runtime.ForwardResponseMessage
+	forward_RcnServiceApiService_CreateServiceV1_0 = runtime.ForwardResponseMessage
+
+	forward_RcnServiceApiService_DescribeServiceV1_0 = runtime.ForwardResponseMessage
+
+	forward_RcnServiceApiService_RemoveServiceV1_0 = runtime.ForwardResponseMessage
+
+	forward_RcnServiceApiService_ListServiceV1_0 = runtime.ForwardResponseMessage
 )

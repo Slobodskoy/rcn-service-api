@@ -14,88 +14,202 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// OmpTemplateApiServiceClient is the client API for OmpTemplateApiService service.
+// RcnServiceApiServiceClient is the client API for RcnServiceApiService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type OmpTemplateApiServiceClient interface {
-	// DescribeTemplateV1 - Describe a template
-	DescribeTemplateV1(ctx context.Context, in *DescribeTemplateV1Request, opts ...grpc.CallOption) (*DescribeTemplateV1Response, error)
+type RcnServiceApiServiceClient interface {
+	// CreateServiceV1 - Create a service
+	CreateServiceV1(ctx context.Context, in *CreateServiceV1Request, opts ...grpc.CallOption) (*CreateServiceV1Response, error)
+	// DescribeServiceV1 - Describe a service
+	DescribeServiceV1(ctx context.Context, in *DescribeServiceV1Request, opts ...grpc.CallOption) (*DescribeServiceV1Response, error)
+	// RemoveServiceV1 - Remove a service
+	RemoveServiceV1(ctx context.Context, in *RemoveServiceV1Request, opts ...grpc.CallOption) (*RemoveServiceV1Response, error)
+	// ListServiceV1 - List a service
+	ListServiceV1(ctx context.Context, in *ListServiceV1Request, opts ...grpc.CallOption) (*ListServiceV1Response, error)
 }
 
-type ompTemplateApiServiceClient struct {
+type rcnServiceApiServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewOmpTemplateApiServiceClient(cc grpc.ClientConnInterface) OmpTemplateApiServiceClient {
-	return &ompTemplateApiServiceClient{cc}
+func NewRcnServiceApiServiceClient(cc grpc.ClientConnInterface) RcnServiceApiServiceClient {
+	return &rcnServiceApiServiceClient{cc}
 }
 
-func (c *ompTemplateApiServiceClient) DescribeTemplateV1(ctx context.Context, in *DescribeTemplateV1Request, opts ...grpc.CallOption) (*DescribeTemplateV1Response, error) {
-	out := new(DescribeTemplateV1Response)
-	err := c.cc.Invoke(ctx, "/ozonmp.rcn_service_api.v1.OmpTemplateApiService/DescribeTemplateV1", in, out, opts...)
+func (c *rcnServiceApiServiceClient) CreateServiceV1(ctx context.Context, in *CreateServiceV1Request, opts ...grpc.CallOption) (*CreateServiceV1Response, error) {
+	out := new(CreateServiceV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.rcn_service_api.v1.RcnServiceApiService/CreateServiceV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// OmpTemplateApiServiceServer is the server API for OmpTemplateApiService service.
-// All implementations must embed UnimplementedOmpTemplateApiServiceServer
+func (c *rcnServiceApiServiceClient) DescribeServiceV1(ctx context.Context, in *DescribeServiceV1Request, opts ...grpc.CallOption) (*DescribeServiceV1Response, error) {
+	out := new(DescribeServiceV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.rcn_service_api.v1.RcnServiceApiService/DescribeServiceV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rcnServiceApiServiceClient) RemoveServiceV1(ctx context.Context, in *RemoveServiceV1Request, opts ...grpc.CallOption) (*RemoveServiceV1Response, error) {
+	out := new(RemoveServiceV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.rcn_service_api.v1.RcnServiceApiService/RemoveServiceV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rcnServiceApiServiceClient) ListServiceV1(ctx context.Context, in *ListServiceV1Request, opts ...grpc.CallOption) (*ListServiceV1Response, error) {
+	out := new(ListServiceV1Response)
+	err := c.cc.Invoke(ctx, "/ozonmp.rcn_service_api.v1.RcnServiceApiService/ListServiceV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// RcnServiceApiServiceServer is the server API for RcnServiceApiService service.
+// All implementations must embed UnimplementedRcnServiceApiServiceServer
 // for forward compatibility
-type OmpTemplateApiServiceServer interface {
-	// DescribeTemplateV1 - Describe a template
-	DescribeTemplateV1(context.Context, *DescribeTemplateV1Request) (*DescribeTemplateV1Response, error)
-	mustEmbedUnimplementedOmpTemplateApiServiceServer()
+type RcnServiceApiServiceServer interface {
+	// CreateServiceV1 - Create a service
+	CreateServiceV1(context.Context, *CreateServiceV1Request) (*CreateServiceV1Response, error)
+	// DescribeServiceV1 - Describe a service
+	DescribeServiceV1(context.Context, *DescribeServiceV1Request) (*DescribeServiceV1Response, error)
+	// RemoveServiceV1 - Remove a service
+	RemoveServiceV1(context.Context, *RemoveServiceV1Request) (*RemoveServiceV1Response, error)
+	// ListServiceV1 - List a service
+	ListServiceV1(context.Context, *ListServiceV1Request) (*ListServiceV1Response, error)
+	mustEmbedUnimplementedRcnServiceApiServiceServer()
 }
 
-// UnimplementedOmpTemplateApiServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedOmpTemplateApiServiceServer struct {
+// UnimplementedRcnServiceApiServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedRcnServiceApiServiceServer struct {
 }
 
-func (UnimplementedOmpTemplateApiServiceServer) DescribeTemplateV1(context.Context, *DescribeTemplateV1Request) (*DescribeTemplateV1Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DescribeTemplateV1 not implemented")
+func (UnimplementedRcnServiceApiServiceServer) CreateServiceV1(context.Context, *CreateServiceV1Request) (*CreateServiceV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateServiceV1 not implemented")
 }
-func (UnimplementedOmpTemplateApiServiceServer) mustEmbedUnimplementedOmpTemplateApiServiceServer() {}
+func (UnimplementedRcnServiceApiServiceServer) DescribeServiceV1(context.Context, *DescribeServiceV1Request) (*DescribeServiceV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeServiceV1 not implemented")
+}
+func (UnimplementedRcnServiceApiServiceServer) RemoveServiceV1(context.Context, *RemoveServiceV1Request) (*RemoveServiceV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveServiceV1 not implemented")
+}
+func (UnimplementedRcnServiceApiServiceServer) ListServiceV1(context.Context, *ListServiceV1Request) (*ListServiceV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListServiceV1 not implemented")
+}
+func (UnimplementedRcnServiceApiServiceServer) mustEmbedUnimplementedRcnServiceApiServiceServer() {}
 
-// UnsafeOmpTemplateApiServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to OmpTemplateApiServiceServer will
+// UnsafeRcnServiceApiServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RcnServiceApiServiceServer will
 // result in compilation errors.
-type UnsafeOmpTemplateApiServiceServer interface {
-	mustEmbedUnimplementedOmpTemplateApiServiceServer()
+type UnsafeRcnServiceApiServiceServer interface {
+	mustEmbedUnimplementedRcnServiceApiServiceServer()
 }
 
-func RegisterOmpTemplateApiServiceServer(s grpc.ServiceRegistrar, srv OmpTemplateApiServiceServer) {
-	s.RegisterService(&OmpTemplateApiService_ServiceDesc, srv)
+func RegisterRcnServiceApiServiceServer(s grpc.ServiceRegistrar, srv RcnServiceApiServiceServer) {
+	s.RegisterService(&RcnServiceApiService_ServiceDesc, srv)
 }
 
-func _OmpTemplateApiService_DescribeTemplateV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DescribeTemplateV1Request)
+func _RcnServiceApiService_CreateServiceV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateServiceV1Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OmpTemplateApiServiceServer).DescribeTemplateV1(ctx, in)
+		return srv.(RcnServiceApiServiceServer).CreateServiceV1(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ozonmp.rcn_service_api.v1.OmpTemplateApiService/DescribeTemplateV1",
+		FullMethod: "/ozonmp.rcn_service_api.v1.RcnServiceApiService/CreateServiceV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OmpTemplateApiServiceServer).DescribeTemplateV1(ctx, req.(*DescribeTemplateV1Request))
+		return srv.(RcnServiceApiServiceServer).CreateServiceV1(ctx, req.(*CreateServiceV1Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// OmpTemplateApiService_ServiceDesc is the grpc.ServiceDesc for OmpTemplateApiService service.
+func _RcnServiceApiService_DescribeServiceV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeServiceV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RcnServiceApiServiceServer).DescribeServiceV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ozonmp.rcn_service_api.v1.RcnServiceApiService/DescribeServiceV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RcnServiceApiServiceServer).DescribeServiceV1(ctx, req.(*DescribeServiceV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RcnServiceApiService_RemoveServiceV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveServiceV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RcnServiceApiServiceServer).RemoveServiceV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ozonmp.rcn_service_api.v1.RcnServiceApiService/RemoveServiceV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RcnServiceApiServiceServer).RemoveServiceV1(ctx, req.(*RemoveServiceV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RcnServiceApiService_ListServiceV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListServiceV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RcnServiceApiServiceServer).ListServiceV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ozonmp.rcn_service_api.v1.RcnServiceApiService/ListServiceV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RcnServiceApiServiceServer).ListServiceV1(ctx, req.(*ListServiceV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// RcnServiceApiService_ServiceDesc is the grpc.ServiceDesc for RcnServiceApiService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var OmpTemplateApiService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "ozonmp.rcn_service_api.v1.OmpTemplateApiService",
-	HandlerType: (*OmpTemplateApiServiceServer)(nil),
+var RcnServiceApiService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "ozonmp.rcn_service_api.v1.RcnServiceApiService",
+	HandlerType: (*RcnServiceApiServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "DescribeTemplateV1",
-			Handler:    _OmpTemplateApiService_DescribeTemplateV1_Handler,
+			MethodName: "CreateServiceV1",
+			Handler:    _RcnServiceApiService_CreateServiceV1_Handler,
+		},
+		{
+			MethodName: "DescribeServiceV1",
+			Handler:    _RcnServiceApiService_DescribeServiceV1_Handler,
+		},
+		{
+			MethodName: "RemoveServiceV1",
+			Handler:    _RcnServiceApiService_RemoveServiceV1_Handler,
+		},
+		{
+			MethodName: "ListServiceV1",
+			Handler:    _RcnServiceApiService_ListServiceV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
