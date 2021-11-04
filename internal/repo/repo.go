@@ -35,7 +35,7 @@ func NewRepo() Repo {
 		storage: map[uint64]model.Service{
 			1: {Id: 1, Title: "Test1", Description: "Description1", Rating: 1},
 			2: {Id: 2, Title: "Test2", Description: "Description2", Rating: 2},
-			3: {Id: 3, Title: "Test2", Description: "Description3", Rating: 3},
+			3: {Id: 3, Title: "Test", Description: "Description3", Rating: 3},
 		},
 	}
 }
@@ -62,7 +62,8 @@ func (r *repo) ListService(ctx context.Context) ([]*model.Service, error) {
 	r.m.Lock()
 	var result []*model.Service
 	for _, v := range r.storage {
-		result = append(result, &v)
+		copy := v
+		result = append(result, &copy)
 	}
 	return result, nil
 }
