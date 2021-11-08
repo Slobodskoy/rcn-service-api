@@ -3,9 +3,6 @@ package api
 import (
 	"context"
 
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promauto"
-
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -16,19 +13,12 @@ import (
 	pb "github.com/ozonmp/rcn-service-api/pkg/rcn-service-api"
 )
 
-var (
-	serviceNotFound = promauto.NewCounter(prometheus.CounterOpts{
-		Name: "rcn_service_api_service_not_found",
-		Help: "Service not found",
-	})
-)
-
 type serviceAPI struct {
 	pb.UnimplementedRcnServiceApiServiceServer
 	repo repo.Repo
 }
 
-// NewSeviceAPI returns api of rcn-service-api service
+// NewServiceAPI returns api of rcn-service-api service
 func NewServiceAPI(r repo.Repo) pb.RcnServiceApiServiceServer {
 	return &serviceAPI{repo: r}
 }
@@ -43,14 +33,13 @@ func (o *serviceAPI) CreateServiceV1(
 
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
-
 	service := model.Service{
 		Id:          req.GetValue().Id,
 		Title:       req.GetValue().Title,
 		Description: req.GetValue().Description,
-		Rating:      int(req.GetValue().Rating),
+		Rating:      (int)(req.GetValue().Rating),
 	}
-	serviceID, err := o.repo.CreateService(ctx, service)
+	serviceId, err := o.repo.CreateService(ctx, service)
 	if err != nil {
 		log.Error().Err(err).Msg("CreateServiceV1 -- failed")
 
@@ -59,13 +48,16 @@ func (o *serviceAPI) CreateServiceV1(
 
 	log.Debug().Msg("CreateServiceV1 - success")
 
-	return &pb.CreateServiceV1Response{ServiceId: serviceID}, nil
+	return &pb.CreateServiceV1Response{
+		ServiceId: serviceId,
+	}, nil
 }
 
 func (o *serviceAPI) DescribeServiceV1(
 	ctx context.Context,
 	req *pb.DescribeServiceV1Request,
 ) (*pb.DescribeServiceV1Response, error) {
+
 	if err := req.Validate(); err != nil {
 		log.Error().Err(err).Msg("DescribeServiceV1 - invalid argument")
 
@@ -81,13 +73,41 @@ func (o *serviceAPI) DescribeServiceV1(
 
 	log.Debug().Msg("DescribeServiceV1 - success")
 
-	return &pb.DescribeServiceV1Response{Value: service.ToPb()}, nil
+	return &pb.DescribeServiceV1Response{
+		Value: service.ToPb(),
+	}, nil
+}
+
+func (o *serviceAPI) ListServiceV1(
+	ctx context.Context,
+	req *pb.ListServiceV1Request,
+) (*pb.ListServiceV1Response, error) {
+
+	if err := req.Validate(); err != nil {
+		log.Error().Err(err).Msg("ListServiceV1 - invalid argument")
+
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	listService, err := o.repo.ListService(ctx)
+	if err != nil {
+		log.Error().Err(err).Msg("ListServiceV1 -- failed")
+
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	log.Debug().Msg("ListServiceV1 - success")
+
+	return &pb.ListServiceV1Response{
+		Items: (model.ServiceList)(listService).ToPb(),
+	}, nil
 }
 
 func (o *serviceAPI) RemoveServiceV1(
 	ctx context.Context,
 	req *pb.RemoveServiceV1Request,
 ) (*pb.RemoveServiceV1Response, error) {
+
 	if err := req.Validate(); err != nil {
 		log.Error().Err(err).Msg("RemoveServiceV1 - invalid argument")
 
@@ -103,27 +123,7 @@ func (o *serviceAPI) RemoveServiceV1(
 
 	log.Debug().Msg("RemoveServiceV1 - success")
 
-	return &pb.RemoveServiceV1Response{Found: ok}, nil
-}
-
-func (o *serviceAPI) ListServiceV1(
-	ctx context.Context,
-	req *pb.ListServiceV1Request,
-) (*pb.ListServiceV1Response, error) {
-	if err := req.Validate(); err != nil {
-		log.Error().Err(err).Msg("ListServiceV1 - invalid argument")
-
-		return nil, status.Error(codes.InvalidArgument, err.Error())
-	}
-
-	list, err := o.repo.ListService(ctx)
-	if err != nil {
-		log.Error().Err(err).Msg("ListServiceV1 -- failed")
-
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-
-	log.Debug().Msg("ListServiceV1 - success")
-
-	return &pb.ListServiceV1Response{Items: (model.ServiceList)(list).ToPb()}, nil
+	return &pb.RemoveServiceV1Response{
+		Found: ok,
+	}, nil
 }

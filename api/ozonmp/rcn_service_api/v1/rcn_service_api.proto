@@ -35,7 +35,7 @@ service RcnServiceApiService {
   // ListServiceV1 - List a service
   rpc ListServiceV1(ListServiceV1Request) returns (ListServiceV1Response) {
     option (google.api.http) = {
-      get: "/v1/services/all"
+      get: "/v1/all/services"
     };
   }  
 }
