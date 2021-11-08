@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package ozonmp.rcn_service_api.v1;
+
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/ozonmp/rcn-service-api/pkg/rcn-service-api;rcn_service_api";
+
+// RcnServiceApiService - Service for working with templates
+service RcnServiceApiService {
+  // CreateServiceV1 - Create a service
+  rpc CreateServiceV1(CreateServiceV1Request) returns (CreateServiceV1Response) {
+    option (google.api.http) = {
+      post: "/v1/services"
+      body: "*"
+    };
+  }
+
+  // DescribeServiceV1 - Describe a service
+  rpc DescribeServiceV1(DescribeServiceV1Request) returns (DescribeServiceV1Response) {
+    option (google.api.http) = {
+      get: "/v1/services/{service_id}"
+    };
+  }
+
+  // RemoveServiceV1 - Remove a service
+  rpc RemoveServiceV1(RemoveServiceV1Request) returns (RemoveServiceV1Response) {
+    option (google.api.http) = {
+      delete: "/v1/services/{service_id}"
+    };
+  }
+
+  // ListServiceV1 - List a service
+  rpc ListServiceV1(ListServiceV1Request) returns (ListServiceV1Response) {
+    option (google.api.http) = {
+      get: "/v1/all/services"
+    };
+  }  
+}
+
+message Service {
+	uint64 id = 1  [(validate.rules).uint64.gt = 0];
+	string title = 2 [(validate.rules).string = {min_len: 5}];
+	string description = 3;
+	int32 rating = 4;
+}
+
+message CreateServiceV1Request {
+  Service value = 1;
+}
+
+message CreateServiceV1Response {
+  uint64 service_id = 1;
+}
+
+message DescribeServiceV1Request {
+  uint64 service_id = 1;
+}
+
+message DescribeServiceV1Response {
+  Service value = 1;
+}
+
+message ListServiceV1Request {}
+
+message ListServiceV1Response {
+  repeated Service items = 1;
+}
+
+message RemoveServiceV1Request {
+  uint64 service_id = 1;
+}
+
+message RemoveServiceV1Response {
+  bool found = 1;
+}
